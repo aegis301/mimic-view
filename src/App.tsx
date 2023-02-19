@@ -1,6 +1,5 @@
-import React from "react";
 import Vitals from "./components/Vitals";
-import "./App.css";
+import "./static/App.css";
 
 function App() {
 	return (

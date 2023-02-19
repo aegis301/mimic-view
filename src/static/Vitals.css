@@ -1,0 +1,8 @@
+.custom-tooltip {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: 1px 1px 3px #ccc;
+    padding: 10px;
+    opacity: 0.8;
+}
