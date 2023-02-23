@@ -8,11 +8,12 @@ import {
 	ComposedChart,
 	Scatter,
 	Brush,
+	Area,
+	Line,
 } from "recharts";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "../static/Vitals.css";
-import InvertedTriangleSVG from "./TriangleSVG";
 
 const CustomTooltip = ({ active, payload }: any) => {
 	if (active) {
@@ -52,9 +53,8 @@ export default function Vitals() {
 		{
 			charttime: string;
 			heart_rate: number;
-			sbp: number;
-			dbp: number;
-			mbp: number;
+			inv_dbp_sbp: number[];
+			inv_mbp: number;
 		}[]
 	>([]);
 
@@ -65,9 +65,8 @@ export default function Vitals() {
 			outData.push({
 				charttime: data.charttime[i],
 				heart_rate: data.heart_rate[i],
-				sbp: data.sbp[i],
-				dbp: data.dbp[i],
-				mbp: data.mbp[i],
+				inv_dbp_sbp: [data.sbp[i], data.dbp[i]],
+				inv_mbp: data.mbp[i],
 			});
 		}
 		return outData;
@@ -110,20 +109,42 @@ export default function Vitals() {
 				minWidth={500}
 				minHeight={500}
 			>
-				<ComposedChart width={1000} height={500} data={data}>
+				<ComposedChart width={1000} height={1000} data={data}>
 					<XAxis dataKey="charttime" />
 					<YAxis />
 					<CartesianGrid strokeDasharray="3 3" />
 					<Tooltip content={<CustomTooltip />} />
 					<Legend verticalAlign="top" height={36} />
-					<Scatter dataKey="heart_rate" fill="#82ca9d" line shape="cross" />
-					<Scatter
-						dataKey="sbp"
+					<Area
+						dataKey="inv_dbp_sbp"
 						fill="#e83535"
-						line
-						shape="<InvertedTriangleSVG />"
+						type="linear"
+						dot
+						stroke="#c22b2b"
+						connectNulls
+						name="SABP/DABP"
 					/>
-					<Brush dataKey="charttime" height={30} stroke="#8884d8" />
+					<Scatter
+						dataKey="inv_mbp"
+						fill="#c22b2b"
+						line
+						shape="cross"
+						name="MAP"
+					/>
+					<Scatter
+						dataKey="heart_rate"
+						fill="#82ca9d"
+						line
+						shape="cross"
+						name="Heart Rate"
+					/>
+
+					<Brush
+						dataKey="charttime"
+						height={30}
+						stroke="#8884d8"
+						strokeWidth={4}
+					/>
 				</ComposedChart>
 			</ResponsiveContainer>
 		</div>
