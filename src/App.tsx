@@ -1,5 +1,6 @@
 import Vitals from "./components/Vitals";
-import NavBar from "./components/AppBar";
+import NavBar from "./components/NavBar";
+import React from "react";
 import "./static/App.css";
 
 function App() {

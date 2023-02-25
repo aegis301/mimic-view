@@ -52,7 +52,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function NavBar() {
-	const [search, setSearch] = React.useState<string>("");
+	const [patientId, setPatientId] = React.useState<string>("");
+
+	const handleSearch = (newPatientId: string): void => {
+		console.log(newPatientId);
+	};
+
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static">
@@ -77,8 +82,12 @@ export default function NavBar() {
 					<form>
 						<Search
 							onInput={(e) => {
-								console.log((e.target as HTMLInputElement).value);
-								setSearch((e.target as HTMLInputElement).value);
+								setPatientId((e.target as HTMLInputElement).value);
+							}}
+							onSubmit={(e) => {
+								e.preventDefault();
+								console.log(e.target);
+								handleSearch(patientId);
 							}}
 						>
 							<SearchIconWrapper>

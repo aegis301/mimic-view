@@ -9,7 +9,6 @@ import {
 	Scatter,
 	Brush,
 	Area,
-	Line,
 } from "recharts";
 import axios from "axios";
 import { useEffect, useState } from "react";
