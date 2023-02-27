@@ -31,25 +31,29 @@ export default function Dashboard() {
 		return outData;
 	};
 
-	React.useEffect(() => {
-		const fetchData = async () => {
-			axios
-				.get("http://localhost:8000/vitalsigns/31921426")
-				.then((response) => {
-					const { subject_id, stay_id, ...dataArrays } = response.data.payload; // isolate the data arrays
-					setSubjectId(subject_id);
-					setStayId(stay_id);
-					// convert the data arrays to an array of objects
-					setData(convertData(dataArrays));
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		};
-		fetchData();
-	}, [setStayId, setSubjectId]);
+	const fetchData = React.useCallback(async (stayId: string) => {
+		axios
+			.get(`http://localhost:8000/vitalsigns/${stayId}`)
+			.then((response) => {
+				const { subject_id, stay_id, ...dataArrays } = response.data.payload; // isolate the data arrays
+				setSubjectId(subject_id);
+				setStayId(stay_id);
+				// convert the data arrays to an array of objects
+				setData(convertData(dataArrays));
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
 
-	const handleSearch = (newStayId: string): void => {};
+	const handleSearch = (newStayId: string): void => {
+		setStayId(newStayId);
+		fetchData(stayId);
+	};
+
+	React.useEffect(() => {
+		fetchData(stayId);
+	}, [stayId, fetchData]);
 
 	return (
 		<div className="Dashboard">
@@ -61,7 +65,6 @@ export default function Dashboard() {
 						variant="outlined"
 						onChange={(e) => {
 							e.preventDefault();
-							console.log((e.target as HTMLInputElement).value);
 							setNewStayId((e.target as HTMLInputElement).value);
 						}}
 					/>

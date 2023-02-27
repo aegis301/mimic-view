@@ -10,8 +10,6 @@ import {
 	Brush,
 	Area,
 } from "recharts";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import "../static/Vitals.css";
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -30,8 +28,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 				</div>
 			);
 		} catch (TypeError) {
-			console.log(payload);
-			if (payload.length === 0) {
+			if (payload === null) {
 				return <div className="custom-tooltip"></div>;
 			} else {
 				return (
