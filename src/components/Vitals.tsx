@@ -9,10 +9,7 @@ import {
 	Scatter,
 	Brush,
 	Area,
-	Line,
 } from "recharts";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import "../static/Vitals.css";
 
 const CustomTooltip = ({ active, payload }: any) => {
@@ -31,8 +28,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 				</div>
 			);
 		} catch (TypeError) {
-			console.log(payload);
-			if (payload.length === 0) {
+			if (payload === null) {
 				return <div className="custom-tooltip"></div>;
 			} else {
 				return (
@@ -46,50 +42,19 @@ const CustomTooltip = ({ active, payload }: any) => {
 	return null;
 };
 
-export default function Vitals() {
-	const [subject_id, setSubject_id] = useState("");
-	const [stay_id, setStay_id] = useState("");
-	const [data, setData] = useState<
-		{
-			charttime: string;
-			heart_rate: number;
-			inv_dbp_sbp: number[];
-			inv_mbp: number;
-		}[]
-	>([]);
-
-	const convertData = (data: any) => {
-		// iterate over index of length of data and convert to array of objects
-		const outData = [];
-		for (let i = 0; i < data.charttime.length; i++) {
-			outData.push({
-				charttime: data.charttime[i],
-				heart_rate: data.heart_rate[i],
-				inv_dbp_sbp: [data.sbp[i], data.dbp[i]],
-				inv_mbp: data.mbp[i],
-			});
-		}
-		return outData;
-	};
-
-	useEffect(() => {
-		const fetchData = async () => {
-			axios
-				.get("http://localhost:8000/vitalsigns/31921426")
-				.then((response) => {
-					const { subject_id, stay_id, ...dataArrays } = response.data.payload; // isolate the data arrays
-					setSubject_id(subject_id);
-					setStay_id(stay_id);
-					// convert the data arrays to an array of objects
-					setData(convertData(dataArrays));
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		};
-		fetchData();
-	}, []);
-
+export default function Vitals({
+	stayId,
+	setStayId,
+	subjectId,
+	setSubjectId,
+	data,
+}: {
+	stayId: string;
+	setStayId: any;
+	subjectId: string;
+	setSubjectId: any;
+	data: any;
+}) {
 	return (
 		<div
 			className="Vitals"
@@ -100,8 +65,8 @@ export default function Vitals() {
 		>
 			<header className="Vitals-header">
 				<h3>Vitals</h3>
-				<p>Subject ID: {subject_id}</p>
-				<p>Stay ID: {stay_id}</p>
+				<p>Subject ID: {subjectId}</p>
+				<p>Stay ID: {stayId}</p>
 			</header>
 			<ResponsiveContainer
 				width="100%"
