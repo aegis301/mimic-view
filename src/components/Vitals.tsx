@@ -50,53 +50,14 @@ export default function Vitals({
 	setStayId,
 	subjectId,
 	setSubjectId,
+	data,
 }: {
 	stayId: string;
 	setStayId: any;
 	subjectId: string;
 	setSubjectId: any;
+	data: any;
 }) {
-	const [data, setData] = useState<
-		{
-			charttime: string;
-			heart_rate: number;
-			inv_dbp_sbp: number[];
-			inv_mbp: number;
-		}[]
-	>([]);
-
-	const convertData = (data: any) => {
-		// iterate over index of length of data and convert to array of objects
-		const outData = [];
-		for (let i = 0; i < data.charttime.length; i++) {
-			outData.push({
-				charttime: data.charttime[i],
-				heart_rate: data.heart_rate[i],
-				inv_dbp_sbp: [data.sbp[i], data.dbp[i]],
-				inv_mbp: data.mbp[i],
-			});
-		}
-		return outData;
-	};
-
-	useEffect(() => {
-		const fetchData = async () => {
-			axios
-				.get("http://localhost:8000/vitalsigns/31921426")
-				.then((response) => {
-					const { subject_id, stay_id, ...dataArrays } = response.data.payload; // isolate the data arrays
-					setSubjectId(subject_id);
-					setStayId(stay_id);
-					// convert the data arrays to an array of objects
-					setData(convertData(dataArrays));
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		};
-		fetchData();
-	}, []);
-
 	return (
 		<div
 			className="Vitals"
