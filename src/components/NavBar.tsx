@@ -51,11 +51,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 }));
 
-export default function NavBar() {
-	const [patientId, setPatientId] = React.useState<string>("");
-
-	const handleSearch = (newPatientId: string): void => {
-		console.log(newPatientId);
+export default function NavBar({ stayId, setStayId }: any) {
+	const handleSearch = (newStayId: string): void => {
+		console.log(newStayId);
 	};
 
 	return (
@@ -82,12 +80,12 @@ export default function NavBar() {
 					<form>
 						<Search
 							onInput={(e) => {
-								setPatientId((e.target as HTMLInputElement).value);
+								setStayId((e.target as HTMLInputElement).value);
 							}}
 							onSubmit={(e) => {
 								e.preventDefault();
 								console.log(e.target);
-								handleSearch(patientId);
+								handleSearch(stayId);
 							}}
 						>
 							<SearchIconWrapper>

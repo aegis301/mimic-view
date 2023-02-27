@@ -45,9 +45,17 @@ const CustomTooltip = ({ active, payload }: any) => {
 	return null;
 };
 
-export default function Vitals() {
-	const [subject_id, setSubject_id] = useState("");
-	const [stay_id, setStay_id] = useState("");
+export default function Vitals({
+	stayId,
+	setStayId,
+	subjectId,
+	setSubjectId,
+}: {
+	stayId: string;
+	setStayId: any;
+	subjectId: string;
+	setSubjectId: any;
+}) {
 	const [data, setData] = useState<
 		{
 			charttime: string;
@@ -77,8 +85,8 @@ export default function Vitals() {
 				.get("http://localhost:8000/vitalsigns/31921426")
 				.then((response) => {
 					const { subject_id, stay_id, ...dataArrays } = response.data.payload; // isolate the data arrays
-					setSubject_id(subject_id);
-					setStay_id(stay_id);
+					setSubjectId(subject_id);
+					setStayId(stay_id);
 					// convert the data arrays to an array of objects
 					setData(convertData(dataArrays));
 				})
@@ -99,8 +107,8 @@ export default function Vitals() {
 		>
 			<header className="Vitals-header">
 				<h3>Vitals</h3>
-				<p>Subject ID: {subject_id}</p>
-				<p>Stay ID: {stay_id}</p>
+				<p>Subject ID: {subjectId}</p>
+				<p>Stay ID: {stayId}</p>
 			</header>
 			<ResponsiveContainer
 				width="100%"
