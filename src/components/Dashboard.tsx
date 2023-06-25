@@ -14,6 +14,13 @@ export default function Dashboard() {
 			heart_rate: number;
 			inv_dbp_sbp: number[];
 			inv_mbp: number;
+			sbp_ni: number;
+			dbp_ni: number;
+			mbp_ni: number;
+			resp_rate: number;
+			temperature: number;
+			spo2: number;
+			glucose: number;
 		}[]
 	>([]);
 
@@ -26,6 +33,13 @@ export default function Dashboard() {
 				heart_rate: data.heart_rate[i],
 				inv_dbp_sbp: [data.sbp[i], data.dbp[i]],
 				inv_mbp: data.mbp[i],
+				sbp_ni: data.sbp_ni[i],
+				dbp_ni: data.dbp_ni[i],
+				mbp_ni: data.mbp_ni[i],
+				resp_rate: data.resp_rate[i],
+				temperature: data.temperature[i],
+				spo2: data.spo2[i],
+				glucose: data.glucose[i],
 			});
 		}
 		return outData;
@@ -74,13 +88,7 @@ export default function Dashboard() {
 				</form>
 			</div>
 
-			<Vitals
-				stayId={stayId}
-				setStayId={setStayId}
-				subjectId={subjectId}
-				setSubjectId={setSubjectId}
-				data={data}
-			/>
+			<Vitals stayId={stayId} subjectId={subjectId} data={data} />
 		</div>
 	);
 }

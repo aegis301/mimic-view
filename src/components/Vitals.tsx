@@ -44,15 +44,11 @@ const CustomTooltip = ({ active, payload }: any) => {
 
 export default function Vitals({
 	stayId,
-	setStayId,
 	subjectId,
-	setSubjectId,
 	data,
 }: {
 	stayId: string;
-	setStayId: any;
 	subjectId: string;
-	setSubjectId: any;
 	data: any;
 }) {
 	return (
@@ -102,6 +98,34 @@ export default function Vitals({
 						line
 						shape="cross"
 						name="Heart Rate"
+					/>
+					<Scatter
+						dataKey="resp_rate"
+						fill="#8884d8"
+						line
+						shape="cross"
+						name="Respiratory Rate"
+					/>
+					<Scatter
+						dataKey="temperature"
+						fill="#ffc658"
+						line
+						shape="cross"
+						name="Temperature"
+					/>
+					<Scatter
+						dataKey="spo2"
+						fill="#1567eb"
+						line
+						shape="cross"
+						name="SpO2"
+					/>
+					<Scatter
+						dataKey="glucose"
+						fill="#068a2b"
+						line
+						shape="cross"
+						name="Glucose"
 					/>
 
 					<Brush
